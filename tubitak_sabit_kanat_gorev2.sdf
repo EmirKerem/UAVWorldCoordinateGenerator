@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <world name="tubitak_sabit_kanat_gorev2">
+    
+    <!-- Gazebo Harmonic Plugins -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- Physics -->
+    <physics name="1ms" type="ignore">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+
+    <!-- Sun -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 100 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Scene -->
+    <scene>
+      <ambient>0.8 0.8 0.8 1</ambient>
+      <background>0.7 0.8 0.9 1</background>
+      <shadows>true</shadows>
+      <sky></sky>
+    </scene>
+
+    <!-- Ground Plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1000 1000</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1000 1000</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- DİREKLER (150m aralıklı) -->
+    <!-- ========================================== -->
+    
+    <!-- Direk 1 - Sağda (Başlangıç/Bitiş Çizgisine Yakın) -->
+    <model name="direk_1">
+      <static>true</static>
+      <pose>100 -75 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>15</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.9 0.5 0 1</ambient>
+            <diffuse>0.9 0.5 0 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>15</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Direk 2 - Solda -->
+    <model name="direk_2">
+      <static>true</static>
+      <pose>100 75 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>15</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.9 0.5 0 1</ambient>
+            <diffuse>0.9 0.5 0 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>15</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- BAŞLANGIÇ/BİTİŞ ÇİZGİSİ (Sağda) -->
+    <!-- ========================================== -->
+    
+    <model name="baslangic_bitis_cizgisi">
+      <static>true</static>
+      <pose>20 0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 100 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- TARAMA ALANI ÇERÇEVESİ (30x100m - Yeşil) -->
+    <!-- Direklerin yanında/üst tarafında konumlandırılmış -->
+    <!-- ========================================== -->
+    
+    <!-- Tarama alanı merkezi: X=150, Y=0 (direklerin ötesinde/yanında) -->
+    
+    <!-- Üst kenar -->
+    <model name="tarama_cerceve_ust">
+      <static>true</static>
+      <pose>150 50 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>30 0.2 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Alt kenar -->
+    <model name="tarama_cerceve_alt">
+      <static>true</static>
+      <pose>150 -50 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>30 0.2 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Sol kenar -->
+    <model name="tarama_cerceve_sol">
+      <static>true</static>
+      <pose>135 0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 100 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Sağ kenar -->
+    <model name="tarama_cerceve_sag">
+      <static>true</static>
+      <pose>165 0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 100 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- SABİT KANAT HEDEFLERİ (Kare) -->
+    <!-- ========================================== -->
+    
+    <!-- Mavi 4x4m Kare -->
+    M6.492 -5.533 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>4 4 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>4 4 0.01</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Kırmızı 2x2m Kare -->
+    M1.127 10.794 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 2 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2 2 0.01</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- DÖNER KANAT HEDEFLERİ -->
+    <!-- ========================================== -->
+    
+    <!-- Mavi Altıgen (2m kenar - 3 döndürülmüş dikdörtgen) -->
+    K9.976 37.502 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="rect1">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2 1.154 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <visual name="rect2">
+          <pose>0 0 0 0 0 1.0472</pose>
+          <geometry>
+            <box>
+              <size>2 1.154 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <visual name="rect3">
+          <pose>0 0 0 0 0 2.0944</pose>
+          <geometry>
+            <box>
+              <size>2 1.154 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>1.2</radius>
+              <length>0.01</length>
+            </cylinder>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Kırmızı Üçgen (1m kenar - polyline) -->
+    M7.239 17.698 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <polyline>
+              <point>0 0</point>
+              <point>1 0</point>
+              <point>0.5 0.866</point>
+              <height>0.02</height>
+            </polyline>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <polyline>
+              <point>0 0</point>
+              <point>1 0</point>
+              <point>0.5 0.866</point>
+              <height>0.02</height>
+            </polyline>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- ========================================== -->
+    <!-- İNİŞ-KALKIŞ BÖLGESİ İŞARETİ (Sağda) -->
+    <!-- ========================================== -->
+    
+    <model name="inis_kalkis_alan">
+      <static>true</static>
+      <pose>0 0 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>30 30 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 0.5</ambient>
+            <diffuse>0.8 0.8 0.8 0.5</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- İniş-Kalkış Bölgesi Çerçevesi -->
+    <model name="inis_kalkis_cerceve_1">
+      <static>true</static>
+      <pose>0 15 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>30 0.3 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="inis_kalkis_cerceve_2">
+      <static>true</static>
+      <pose>0 -15 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>30 0.3 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="inis_kalkis_cerceve_3">
+      <static>true</static>
+      <pose>-15 0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 30 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="inis_kalkis_cerceve_4">
+      <static>true</static>
+      <pose>15 0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 30 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
